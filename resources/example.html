@@ -3,27 +3,208 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Example HTML for visualizing CSS</title>
-	<link rel="stylesheet" href="../lib/css/estilo.css" type="text/css" />
-</head>
-<body>
-	<div id="ds-header">
-        <h1>RIE</h1>
-        <h2>Repositorio Institucional de ECOSUR</h2>
-        <ul id="ds-trail">DSpace Home</ul>
-        <div id="ds-user">
-        	<p>
-            	<a href="/login">Login</a>
-            </p>
+    <link type="text/css" rel="stylesheet" media="screen" href="../lib/css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="screen" href="../lib/css/base.css" />
+    <link type="text/css" rel="stylesheet" media="screen" href="../lib/css/helper.css" />
+    <link type="text/css" rel="stylesheet" media="screen" href="../lib/css/media.css" />
+    <link type="text/css" rel="stylesheet" media="screen" href="../lib/css/style.css" />
+    <link type="text/css" rel="stylesheet" media="screen" href="../lib/css/authority-control.css" />
+    <link type="text/css" rel="stylesheet" media="handheld" href="../lib/css/handheld.css" />
+    <link type="text/css" rel="stylesheet" media="print" href="../Ecosur/lib/css/print.css" />
+    </head>
+    <body>
+        <div id="ds-header-ecosur">
+        <div class="clearfix" id="ds-header">
+        <div class="logoEcosur">
+        <a id="ds-header-logo-link" href="/">
+        <span id="ds-header-logo"> </span>
+        </a>
         </div>
-    </div>
-    <div id="ds-body">
-    	<h1>Heading1</h1>
-    	<p>Some content.</p>
-    	<h2>Heading2</h2>
-        <p>Some more content.</p>
-        <h3>Heading3</h3>
-        <p>Some more content. Another test line.</p>
-    </div>
-</body>
+        <div class="nameecosur">
+        <span id="ds-header-logo-text">EL COLEGIO </span>
+        <span id="ds-header-logo-textUnder">
+        <span style="font-size:100%">de la </span>FRONTERA SUR</span>
+        </div>
+        <div id="ds-user-box">
+        <div class="linksEcosur">
+        <div class="linksUp">
+        <ul>
+        <li>Idioma</li>
+        <li>Contacto</li>
+        <li>Correo Institucional</li>
+        </ul>
+        </div>
+        </div>
+        <div class="linksEcosur">
+        <div class="searchEcosur">
+        <div class="input-append">
+        <input type="text" id="appendedInputButton" class="span2" />
+        <button style="height:24px; margin-top:0px" type="button" class="btn icon-search" />
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div id="ds-trail-ecosur">
+        <ul id="ds-trail">
+        <li class="ds-trail-link first-link last-link">Quiénes Somos</li>
+        <li class="ds-trail-link first-link last-link">Unidades</li>
+        <li class="ds-trail-link first-link last-link">Investigación</li>
+        <li class="ds-trail-link first-link last-link">Vinculación</li>
+        <li class="ds-trail-link first-link last-link">Posgrado</li>
+        <li class="ds-trail-link first-link last-link">Biblioteca</li>
+        <li class="ds-trail-link first-link last-link">Transparencia</li>
+        </ul>
+        </div>
+        <div id="ds-header-wrapper">
+        <div class="clearfix" id="ds-header">
+        <h1 class="pagetitle visuallyhidden">Browsing  by Author </h1>
+        <h2 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="static-pagetitle visuallyhidden">DSpace/Manakin Repository</h2>
+        </div>
+        </div>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" id="ds-trail-wrapper">
+        <div class="clearfix" id="ds-content-rie">
+        <ul id="ds-trail">
+        <li class="ds-trail-link first-link homerie ">
+        <a href="/">DSpace Home</a>
+        </li>
+        <li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-trail-arrow">→</li>
+        <li class="ds-trail-link last-link">Browsing  by Author</li>
+        </ul>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="loginUser">
+        <span class="iconuser" />
+        <span>
+        <a href="/login">Login</a>
+        </span>
+        </div>
+        </div>
+        </div>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="hidden" id="no-js-warning-wrapper">
+        <div id="no-js-warning">
+        <div class="notice failure">JavaScript is disabled for your browser. Some features of this site may not work without it.</div>
+        </div>
+        </div>
+        <div id="ds-content-wrapper">
+        <div class="clearfix" id="ds-content">
+        <div id="ds-body">
+        <div>
+        <div class="slider">
+        <h1>SECCION DEL SLIDER</h1>
+        </div>
+        </div>
+        <h1 class="ds-div-head">DSpace Repository</h1>
+        <div id="file_news_div_news" class="ds-static-div primary">
+        <p class="ds-paragraph">DSpace is a digital service that collects, preserves, and distributes digital material. Repositories are important tools for preserving an organization's legacy; they facilitate digital preservation and scholarly communication.</p>
+        </div>
+        <h1 class="ds-div-head">Communities in DSpace</h1>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_artifactbrowser_CommunityBrowser_div_comunity-browser" class="ds-static-div primary">
+        <p class="ds-paragraph">Select a community to browse its collections.</p>
+        <ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" />
+        </div>
+        <h1 class="ds-div-head">Search DSpace</h1>
+        <form xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_artifactbrowser_FrontPageSearch_div_front-page-search" class="ds-interactive-div primary" action="/search" method="get" onsubmit="javascript:tSubmit(this);">
+        <p class="ds-paragraph">Enter some text in the box below to search DSpace.</p>
+        <p xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-paragraph">
+        <input id="aspect_artifactbrowser_FrontPageSearch_field_query" class="ds-text-field" name="query" type="text" value="" />
+        <input xmlns:i18n="http://apache.org/cocoon/i18n/2.1" id="aspect_artifactbrowser_FrontPageSearch_field_submit" class="ds-button-field" name="submit" type="submit" value="Go" />
+        </p>
+        </form>
+        </div>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-options-wrapper">
+        <div id="ds-options">
+        <h1 class="ds-option-set-head" id="ds-search-option-head">Search DSpace</h1>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set" id="ds-search-option">
+        <form method="post" id="ds-search-form" action="/search">
+        <fieldset>
+        <input type="text" class="ds-text-field " name="query" />
+        <input xmlns:i18n="http://apache.org/cocoon/i18n/2.1" value="Go" type="submit" name="submit" class="ds-button-field " onclick="&#10;                                        var radio = document.getElementById(&quot;ds-search-form-scope-container&quot;);&#10;                                        if (radio != undefined &amp;&amp; radio.checked)&#10;                                        {&#10;                                        var form = document.getElementById(&quot;ds-search-form&quot;);&#10;                                        form.action=&#10;                                    &quot;/handle/&quot; + radio.value + &quot;/search&quot; ; &#10;                                        }&#10;                                    " />
+        </fieldset>
+        </form>
+        <a href="/advanced-search">Advanced Search</a>
+        </div>
+        <h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set-head">Browse</h1>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_viewArtifacts_Navigation_list_browse" class="ds-option-set">
+        <ul class="ds-options-list">
+        <li>
+        <h2 class="ds-sublist-head">All of DSpace</h2>
+        <ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+        <li>
+        <a href="/community-list">Communities &amp; Collections</a>
+        </li>
+        <li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+        <a href="/browse?type=dateissued">By Issue Date</a>
+        </li>
+        <li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+        <a href="/browse?type=author">Authors</a>
+        </li>
+        <li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+        <a href="/browse?type=title">Titles</a>
+        </li>
+        <li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+        <a href="/browse?type=subject">Subjects</a>
+        </li>
+        </ul>
+        </li>
+        </ul>
+        </div>
+        <h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-option-set-head">My Account</h1>
+        <div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_viewArtifacts_Navigation_list_account" class="ds-option-set">
+        <ul class="ds-simple-list">
+        <li>
+        <a href="/login">Login</a>
+        </li>
+        <li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+        <a href="/register">Register</a>
+        </li>
+        </ul>
+        </div>
+            </div>
+            <h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-option-set-head">Enlaces estaticos</h1>
+            <div class="ds-option-set">
+            <ul class="ds-simple-list">
+            <li>
+            <a href="/xmlui/login">Manual para publicar en ECOSUR</a>
+            </li>
+            <li>
+            <a href="/xmlui/register">Manual para publicar en ECOFONTERAS</a>
+            </li>
+            </ul>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            <div id="ds-footer-wrapper">
+            <div id="ds-footer">
+            <div id="ds-footer-left">
+                                Carretera Panamericana y Periférico Sur s/n, Barrio María Auxiliadora, <br />
+                                San Cristóbal de Las Casas, Chiapas CP 29290 <br />
+                                Tel. (967) 674 9000 - Fax (967) 674 9021
+                            </div>
+            <div id="ds-footer-right">
+                                Derechos reservados © 2013<br />
+                                ECOSUR - Área de Infonomía
+                                
+                            </div>
+            <div id="ds-footer-links">
+            <a href="/contact">Contact Us</a> | <a xmlns:i18n="http://apache.org/cocoon/i18n/2.1" href="/feedback">Send Feedback</a>
+            </div>
+            <a xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="hidden" href="/htmlmap"> </a>
+            </div>
+            </div>
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="modal hide fade" id="myModal">
+            <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+            </div>
+            <div class="modal-body">
+            <p id="bodyModal" />
+            </div>
+            <div class="modal-footer">
+            <button aria-hidden="true" data-dismiss="modal" class="btn">Cerrar</button>
+            </div>
+            </div>
+    </body>
 </html>
  

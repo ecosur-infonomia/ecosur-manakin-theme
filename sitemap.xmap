@@ -137,15 +137,14 @@
                     <map:parameter name="stylesheet.print" value="lib/css/print.css"/>
                 </map:transform>
 
-				<map:transform type="IncludePageMeta">
+                <map:transform type="IncludePageMeta">
                     <map:parameter name="stylesheet.screen#1" value="lib/bootstrap/css/bootstrap.min.css"/>
                     <map:parameter name="stylesheet.screen#2" value="lib/bootstrap/css/bootstrap-responsive.min.css"/>
-                    <map:parameter name="stylesheet.screen#3" value="lib/css/estilo.css"/>
                     <map:parameter name="javascript#1" value="lib/bootstrap/js/bootstrap.min.js"/>
                     <map:parameter name="javascript#2" value="lib/jquery/jquery.min.js"/>
                     <map:parameter name="theme.path" value="{global:theme-path}"/>
                     <map:parameter name="theme.name" value="{global:theme-name}"/>
-				</map:transform>
+                </map:transform>
 
 				<!-- Debuging output -->
 				<map:match type="request" pattern="XML">
