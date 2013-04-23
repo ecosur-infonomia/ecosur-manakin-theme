@@ -66,7 +66,8 @@
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="parent::node()/@previousPage"/>
                                     </xsl:attribute>
-                                    <i18n:text>xmlui.dri2xhtml.structural.pagination-previous</i18n:text>
+                                    <span class="image previouspage">i</span>
+                                    <!--<i18n:text>xmlui.dri2xhtml.structural.pagination-previous</i18n:text>-->
                                 </a>
                             </xsl:if>
                         </li>
@@ -76,7 +77,8 @@
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="parent::node()/@nextPage"/>
                                     </xsl:attribute>
-                                    <i18n:text>xmlui.dri2xhtml.structural.pagination-next</i18n:text>
+                                    <span class="image nextpage">i</span>
+                                    <!--<i18n:text>xmlui.dri2xhtml.structural.pagination-next</i18n:text>-->
                                 </a>
                             </xsl:if>
                         </li>
@@ -111,7 +113,8 @@
                                         <xsl:value-of
                                                 select="substring-after(parent::node()/@pageURLMask,'{pageNum}')"/>
                                     </xsl:attribute>
-                                    <i18n:text>xmlui.dri2xhtml.structural.pagination-previous</i18n:text>
+                                    <span class="image previouspage">i</span>
+                                    <!--<i18n:text>xmlui.dri2xhtml.structural.pagination-previous</i18n:text>-->
                                 </a>
                             </li>
                         </xsl:if>
@@ -174,7 +177,8 @@
                                         <xsl:value-of
                                                 select="substring-after(parent::node()/@pageURLMask,'{pageNum}')"/>
                                     </xsl:attribute>
-                                    <i18n:text>xmlui.dri2xhtml.structural.pagination-next</i18n:text>
+                                    <span class="image nextpage">i</span>
+                                    <!--<i18n:text>xmlui.dri2xhtml.structural.pagination-next</i18n:text>-->
                                 </a>
                             </li>
                         </xsl:if>

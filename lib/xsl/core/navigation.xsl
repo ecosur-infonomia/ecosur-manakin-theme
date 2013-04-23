@@ -45,7 +45,8 @@
         <div id="ds-options-wrapper">
             <div id="ds-options">
                 <xsl:if test="not(contains(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='URI'], 'discover'))">
-                    <h1 id="ds-search-option-head" class="ds-option-set-head">
+                    <xsl:if test="$request-uri!= ''"> <!--Si no es la página principal RIE -->
+                        <h1 id="ds-search-option-head" class="ds-option-set-head">
                         <i18n:text>xmlui.dri2xhtml.structural.search</i18n:text>
                     </h1>
                     <div id="ds-search-option" class="ds-option-set">
@@ -108,7 +109,7 @@
                                                 <i18n:text>xmlui.dri2xhtml.structural.search-in-collection</i18n:text>
                                             </xsl:otherwise>
 
-                                        </xsl:choose>
+</xsl:choose>
                                     </label>
                                 </xsl:if>
                             </fieldset>
@@ -126,6 +127,7 @@
                         </xsl:if>
                     </div>
 
+</xsl:if>
                 </xsl:if>
                 <!-- Once the search box is built, the other parts of the options are added -->
                 <xsl:apply-templates/>
@@ -143,20 +145,7 @@
                 </xsl:if>
 
 </div>
-            <!--SECCION DE ENLACES ESTATICOS PARA QUE SE VEAN EN LA WEB -->
-            <h1 class="ds-option-set-head" >Enlaces estaticos</h1>
-
-<div class="ds-option-set" >
-                <ul class="ds-simple-list">
-                <li>
-                <a href="/xmlui/login">Manual para publicar en ECOSUR</a>
-                </li>
-                <li >
-                <a href="/xmlui/register">Manual para publicar en ECOFONTERAS</a>
-                </li>
-                </ul>
             </div>
-        </div>
     </xsl:template>
 
     <!-- Add each RSS feed from meta to a list -->

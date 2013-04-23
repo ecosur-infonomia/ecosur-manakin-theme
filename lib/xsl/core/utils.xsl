@@ -43,7 +43,7 @@
                 <xsl:text>&amp;dmdTypes=DC</xsl:text>
             </xsl:if>-->
         </xsl:variable>
-        <xsl:comment> External Metadata URL: <xsl:value-of select="$externalMetadataURL"/> </xsl:comment>
+        <xsl:comment> External Metadata URL: <xsl:value-of select="$externalMetadataURL"/> </xsl:comment>        
         <li>
             <xsl:attribute name="class">
                 <xsl:text>ds-artifact-item </xsl:text>
@@ -55,10 +55,12 @@
                         <xsl:text>collection </xsl:text>
                     </xsl:when>
                 </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="position() mod 2 = 0">even</xsl:when>
-                    <xsl:otherwise>odd</xsl:otherwise>
-                </xsl:choose>
+                <xsl:if test="$request-uri!=''">
+                    <xsl:choose>
+                        <xsl:when test="position() mod 2 = 0">even</xsl:when>
+                        <xsl:otherwise>odd</xsl:otherwise>                    
+                    </xsl:choose>
+                </xsl:if>
             </xsl:attribute>
             <xsl:apply-templates select="document($externalMetadataURL)" mode="summaryList"/>
             <xsl:apply-templates />

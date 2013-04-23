@@ -105,7 +105,7 @@
                                instead referenced from the different points in the document. -->
                                 <xsl:apply-templates/>
                             </div>
-                                                </div>
+                                                                        </div>
 
 
                         <!--
@@ -118,7 +118,7 @@
                 </xsl:otherwise>
             </xsl:choose>
                 <!-- Javascript at the bottom for fast page loading -->
-                          <xsl:text disable-output-escaping="yes">&lt;/body&gt;</xsl:text>
+                                      <xsl:text disable-output-escaping="yes">&lt;/body&gt;</xsl:text>
         </html>
     </xsl:template>
 
@@ -127,7 +127,7 @@
         references to stylesheets pulled directly from the pageMeta element. -->
     <xsl:template name="buildHead">
         <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
             <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -138,7 +138,7 @@
             initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
             maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
             -->
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
             <link rel="shortcut icon">
                 <xsl:attribute name="href">
@@ -280,7 +280,8 @@
                     <xsl:text>/lib/modernizr/modernizr.js</xsl:text>
                 </xsl:attribute>&#160;</script>
 
-<!--Configuracion del js de shareThis-->
+               
+            <!--Configuracion del js de shareThis-->
             <script type="text/javascript">var switchTo5x=true;</script>
             <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
             <script type="text/javascript">
@@ -291,7 +292,7 @@
                         });
             </script>
 
-            <!-- Add the title in -->
+                        <!-- Add the title in -->
             <xsl:variable name="page_title" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title']" />
             <title>
                 <xsl:choose>
@@ -373,21 +374,22 @@
             </ul>
         </div>
         <div id="ds-header-wrapper">
-            <div id="ds-header" class="clearfix">              
-                <h1 class="pagetitle visuallyhidden">
-                    <xsl:choose>
+            <div id="ds-header-nameRIE" class="clearfix">              
+                <!--<h1 class="pagetitle visuallyhidden">
+                    <xsl:choose>-->
                         <!-- protection against an empty page title -->
-                        <xsl:when test="not(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title'])">
+                        <!--      <xsl:when test="not(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title'])">
                             <xsl:text> </xsl:text>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:copy-of
+</xsl:when>
+<xsl:otherwise>
+<xsl:copy-of
                                     select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title']/node()"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </h1>
-                <h2 class="static-pagetitle visuallyhidden">
-                    <i18n:text>xmlui.dri2xhtml.structural.head-subtitle</i18n:text>
+</xsl:otherwise>
+</xsl:choose>
+                </h1>-->
+                <h2 class="static-pagetitle">
+                    Repositorio Institucional de ECOSUR [RIE]
+                    <!--<i18n:text>xmlui.dri2xhtml.structural.head-subtitle</i18n:text>-->
                 </h2>
             </div>
             </div>
@@ -408,17 +410,17 @@
                             <li class="ds-trail-link first-link">-</li>
                         </xsl:when>
                         <xsl:otherwise>
+                            <span class="image homerie">i</span> <!--icono del path (inicio)-->
                             <xsl:apply-templates select="/dri:document/dri:meta/dri:pageMeta/dri:trail"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </ul>
-                <!--Enlace DE LOGIN DEL USUARIO o información del usuario que inicio sesion-->
+                                <!--Enlace DE LOGIN DEL USUARIO o información del usuario que inicio sesion-->
                 <div class="loginUser">
-                <xsl:choose>
+                <span class="iconuser image">i</span><!--icono de inicio de sesion-->
+                    <xsl:choose>
                     <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
-                        <span class="iconuser">
-                            </span>
-                                    <span>
+                        <span>
                                 <a>
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="/dri:document/dri:meta/dri:userMeta/
@@ -442,7 +444,7 @@
                             </span>                                
                     </xsl:when>
                     <xsl:otherwise>
-                        <span class="iconuser">
+                        <span class="labellogin">
                             </span>
                             <span>
                                 <a>
@@ -471,7 +473,7 @@
             <xsl:attribute name="class">
                 <xsl:text>ds-trail-link </xsl:text>
                 <xsl:if test="position()=1">
-                    <xsl:text>first-link homerie </xsl:text>
+                    <xsl:text>first-link </xsl:text>
                 </xsl:if>
                 <xsl:if test="position()=last()">
                     <xsl:text>last-link</xsl:text>
@@ -558,39 +560,39 @@
     <!-- Like the header, the footer contains various miscellaneous text, links, and image placeholders -->
     <xsl:template name="buildFooter">
         <div id="ds-footer-wrapper">
+            <xsl:call-template name="linksStaticRIE"/>            
             <div id="ds-footer">
                 <div id="ds-footer-left">
-                    Carretera Panamericana y Periférico Sur s/n, Barrio María Auxiliadora, <br/>
+                    <!--Carretera Panamericana y Periférico Sur s/n, Barrio María Auxiliadora, <br/>
                     San Cristóbal de Las Casas, Chiapas CP 29290 <br/>
-                    Tel. (967) 674 9000 - Fax (967) 674 9021
+                    Tel. (967) 674 9000 - Fax (967) 674 9021-->
                 </div>
                 <div id="ds-footer-right">
-                    Derechos reservados © 2013<br/>
-                    ECOSUR - Área de Infonomía
+                    Derechos reservados © 2013                    ECOSUR - Área de Infonomía
                     <!--<span class="theme-by">Theme by&#160;</span>
                     <a title="@mire NV" target="_blank" href="http://atmire.com" id="ds-footer-logo-link">
                     <span id="ds-footer-logo">&#160;</span>
                     </a>-->
                 </div>
-                <div id="ds-footer-links">
-                    <a>
+                <!--<div id="ds-footer-links">
+<a>
                         <xsl:attribute name="href">
-                            <xsl:value-of
+<xsl:value-of
                                     select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
                             <xsl:text>/contact</xsl:text>
-                        </xsl:attribute>
+</xsl:attribute>
                         <i18n:text>xmlui.dri2xhtml.structural.contact-link</i18n:text>
-                    </a>
+</a>
                     <xsl:text> | </xsl:text>
-                    <a>
+<a>
                         <xsl:attribute name="href">
-                            <xsl:value-of
+<xsl:value-of
                                     select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
                             <xsl:text>/feedback</xsl:text>
-                        </xsl:attribute>
+</xsl:attribute>
                         <i18n:text>xmlui.dri2xhtml.structural.feedback-link</i18n:text>
-                    </a>
-                </div>
+</a>
+                </div>-->
                 <!--Invisible link to HTML sitemap (for search engines) -->
                 <a class="hidden">
                     <xsl:attribute name="href">
@@ -602,7 +604,7 @@
                 </a>
             </div>
         </div>
-            <!--Es la estructura del modal que se usa para mostrar el Resumen-->
+                    <!--Es la estructura del modal que se usa para mostrar el Resumen-->
        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -622,11 +624,35 @@
                                     <xsl:text>/themes/</xsl:text>
                                     <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='theme'][@qualifier='path']"/>
                                     <xsl:text>/lib/js/rie.js</xsl:text>
-                                </xsl:attribute>&#160;</script>
+                                </xsl:attribute>&#160;         </script>
 
-          <script type="text/javascript">validateURLIRE()</script>
-            <!--Incluye los script para compartir en las redes sociales -->
-            <script type="text/javascript">var switchTo5x=true;</script>             
+          <!--Para el carrusel de las novedades-->
+         <xsl:if test="$request-uri = ''">
+            <script type="text/javascript">              <xsl:attribute name="src">
+                        <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
+                        <xsl:text>/themes/</xsl:text>
+                        <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='theme'][@qualifier='path']"/>
+                        <xsl:text>/lib/js/jquery.carouFredSel-6.2.1-packed.js</xsl:text>
+                    </xsl:attribute>&#160;</script>
+
+            <script type="text/javascript">
+                        $(function() {
+                                    //	Scrolled by user interaction
+                                    $('#slider').carouFredSel({
+                                            auto: false,
+                                            prev: '#prev2',
+                                            next: '#next2',
+                                            pagination: "#pager2",
+                                            mousewheel: true,
+                                            swipe: {
+                                                    onMouse: true,
+                                                    onTouch: true
+                                            }
+                                    });
+                       });
+             </script>
+            </xsl:if>
+            <script type="text/javascript">validateURLIRE()</script>             
            
    </xsl:template>
 
@@ -644,9 +670,11 @@
     -->
     <xsl:template match="dri:body">
         <div id="ds-body">
-<div>
-<div class="slider"><h1>SECCION DEL SLIDER</h1></div>
-</div>
+            <xsl:if test="$request-uri = ''"> <!--Solo se muestra en la pagina principal-->
+                <!--<div>
+                    <div class="slider"><h1>SECCION DEL SLIDER</h1></div>
+                </div>-->
+            </xsl:if>
             <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='alert'][@qualifier='message']">
                 <div id="ds-system-wide-alert">
                     <p>
@@ -669,10 +697,63 @@
                 </xsl:when>
                 <!-- Otherwise use default handling of body -->
                 <xsl:otherwise>
-                    <xsl:apply-templates />
+                                        <xsl:apply-templates />
                 </xsl:otherwise>
             </xsl:choose>
 
+</div>
+    </xsl:template>
+
+     <!--Seccion Enlaces Estaticos-->
+     <xsl:template name="linksStaticRIE">
+      <div class="linksBottom">
+          <div class="divBottom" style="width:15%;">
+                <h1 class="head-Bottom">Acerca del RIE</h1>
+                <div class="list-bottom" >
+                    <ul class="ds-simple-list">
+                        <li><a href="/xmlui/login">Qué es el RIE</a></li>
+                        <li><a href="/xmlui/register">Contenido</a></li>
+                        <li><a href="/xmlui/register">Créditos</a></li>
+                        <li><a href="/xmlui/register">Políticas</a></li>
+                        <li><a href="/xmlui/register">¿Cómo participar?</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--SECCION DE ENLACES ESTATICOS PARA QUE SE VEAN EN LA WEB -->
+            <div class="divBottom">
+                <h1 class="head-Bottom">Guías de usuarios</h1>
+                <div class="list-bottom" >
+                    <ul class="ds-simple-list">
+                        <li><a href="/xmlui/login">Publicar en ECOSUR</a></li>
+                        <li><a href="/xmlui/register">Publicar en ECOFONTERAS</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="divBottom">
+                <h1 class="head-Bottom">Licencia y Copyright</h1>
+                <div class="list-bottom" >
+                    <ul class="ds-simple-list">
+                        <li><a href="/xmlui/login">Copyright y Derechos de autor</a></li>
+                        <li><a href="/xmlui/register">Definiciones</a></li>
+                        <li><a href="/xmlui/register">Preguntas frecuentes</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="divBottom">
+                <h1 class="head-Bottom">Enlaces relacionados</h1>
+                <div class="list-bottom" >
+                    <ul class="ds-simple-list">
+                        <li><a href="/xmlui/login">SIBE</a></li>
+                        <li><a href="/xmlui/register">Revista Sociedad y Ambiente</a></li>
+                        <li><a href="/xmlui/register">Revista Ecofronteras</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="divBottom" style="width:10%; border-right:none; box-shadow:none">
+                <h1 class="head-Bottom">RSS</h1>
+                <div class="list-bottom" id="sectionRSS">
+                </div>
+            </div>
                 </div>
     </xsl:template>
 
@@ -774,7 +855,7 @@
         </xsl:if>
 
         
-        <!--PNG Fix for IE6-->
+                <!--PNG Fix for IE6-->
         <xsl:text disable-output-escaping="yes">&lt;!--[if lt IE 7 ]&gt;</xsl:text>
         <script type="text/javascript">
             <xsl:attribute name="src">
@@ -790,7 +871,7 @@
 
 
         
-        <script type="text/javascript">
+                <script type="text/javascript">
             runAfterJSImports.execute();
         </script>
 
@@ -809,9 +890,9 @@
            </xsl:text></script>
         </xsl:if>
                             
-                         
-    </xsl:template>
+</xsl:template>
 
 
 
 </xsl:stylesheet>
+

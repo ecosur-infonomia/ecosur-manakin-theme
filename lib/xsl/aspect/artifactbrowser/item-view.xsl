@@ -41,8 +41,7 @@
         <!-- Generate the info about the item from the metadata section -->
         <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
         mode="itemSummaryView-DIM"/>
-
-<!--
+        <!--
         http://www.facebook.com/sharer.php?u=http%3A//localhost:8084/xmlui/handle/123456789/4
 http://www.facebook.com/sharer.php?u=http%3A//www.redalyc.org/articulo.oa%3Fid=31005009
 https://twitter.com/intent/tweet?original_referer=http%3A//www.redalyc.org/articulo.oa%3Fid=31005009&amp;text=%20http%3A//www.redalyc.org/articulo.oa%3Fid=31005009%20%40redalyc"
@@ -78,11 +77,9 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                 </table>
             </xsl:otherwise>
         </xsl:choose>
-
-<!-- Generate the Creative Commons license information from the file section (DSpace deposit license hidden by default)-->
+        <!-- Generate the Creative Commons license information from the file section (DSpace deposit license hidden by default)-->
         <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='CC-LICENSE']"/>
-
-</xsl:template>
+    </xsl:template>
 
 
     <xsl:template match="dim:dim" mode="itemSummaryView-DIM">
@@ -90,8 +87,9 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
             <xsl:call-template name="itemSummaryView-DIM-fields"/>
         </div>
     </xsl:template>
+    
 
-        <xsl:template name="itemSummaryView-DIM-fields">
+    <xsl:template name="itemSummaryView-DIM-fields">
       <xsl:param name="clause" select="'1'"/>
       <xsl:param name="phase" select="'even'"/>
       <xsl:variable name="otherPhase">
@@ -108,25 +106,26 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
       <xsl:choose>
           <!-- Title row -->
           <xsl:when test="$clause = 1">
-
-<xsl:choose>
+              <xsl:choose>
                   <xsl:when test="count(dim:field[@element='title'][not(@qualifier)]) &gt; 1">
                       <!-- display first title as h1 -->
                       <h1>
                           <xsl:value-of select="dim:field[@element='title'][not(@qualifier)][1]/node()"/>
                       </h1>
                       <div class="simple-item-view-other">
-                                                        <span class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-title</i18n:text>:</span>
-                          <span>
-                              <xsl:for-each select="dim:field[@element='title'][not(@qualifier)]">
-                                  <xsl:value-of select="./node()"/>
-                                  <xsl:if test="count(following-sibling::dim:field[@element='title'][not(@qualifier)]) != 0">
-                                      <xsl:text>; </xsl:text>
-                                      <br/>
-                                  </xsl:if>
-                              </xsl:for-each>
-                          </span>
-                                            </div>
+                          
+                              <span class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-title</i18n:text>:</span>
+                              <span>
+                                  <xsl:for-each select="dim:field[@element='title'][not(@qualifier)]">
+                                      <xsl:value-of select="./node()"/>
+                                      <xsl:if test="count(following-sibling::dim:field[@element='title'][not(@qualifier)]) != 0">
+                                          <xsl:text>; </xsl:text>
+                                          <br/>
+                                      </xsl:if>
+                                  </xsl:for-each>
+                              </span>
+                          
+                      </div>
                   </xsl:when>
                   <xsl:when test="count(dim:field[@element='title'][not(@qualifier)]) = 1">
                       <h1>
@@ -146,17 +145,18 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
           </xsl:when>
 
           <!-- Author(s) row -->
-          <xsl:when test="$clause = 2 and (dim:field[@element='contributor'][@qualifier='author'] or dim:field[@element='creator'] or dim:field[@element='contributor'])">
+          <xsl:when test="$clause = 2 and (dim:field[@element='contributor'][@qualifier='author'] or dim:field[@element='creator'] or dim:field[@element='contributor'])">              
                     <div class="simple-item-view-authors">
 	                    <xsl:choose>
 	                        <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">
 	                            <xsl:for-each select="dim:field[@element='contributor'][@qualifier='author']">
-                                                                                    <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
-                                          <xsl:if test="@authority">
-                                            <xsl:attribute name="class"><xsl:text>ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
-                                          </xsl:if>
-	                                <xsl:copy-of select="node()"/>
-                                        </a>
+                                        
+                                            <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
+                                              <xsl:if test="@authority">
+                                                <xsl:attribute name="class"><xsl:text>ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
+                                              </xsl:if>
+                                              <xsl:copy-of select="node()"/>
+                                             </a>
                                         
 	                                <xsl:if test="count(following-sibling::dim:field[@element='contributor'][@qualifier='author']) != 0">
 	                                    <xsl:text>, </xsl:text>
@@ -167,7 +167,7 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
 	                            <xsl:for-each select="dim:field[@element='creator']">
 	                                <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
                                             <xsl:copy-of select="node()"/>
-	                                </a>
+                                        </a>
 	                                <xsl:if test="count(following-sibling::dim:field[@element='creator']) != 0">
 	                                    <xsl:text>, </xsl:text>
 	                                </xsl:if>
@@ -175,9 +175,9 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
 	                        </xsl:when>
 	                        <xsl:when test="dim:field[@element='contributor']">
 	                            <xsl:for-each select="dim:field[@element='contributor']">
-	                                <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
+                                        <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
                                             <xsl:copy-of select="node()"/>
-	                                </a>
+                                        </a>
 	                                <xsl:if test="count(following-sibling::dim:field[@element='contributor']) != 0">
 	                                    <xsl:text>; </xsl:text>
 	                                </xsl:if>
@@ -196,8 +196,8 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
 
           <!-- identifier.uri row -->
           <xsl:when test="$clause = 3 and (dim:field[@element='identifier' and @qualifier='uri'])">
-                    <div class="simple-item-view-other">
-	                <div class="portada">
+                <div class="simple-item-view-other">
+                      <div class="portada">
                         <span></span>
                       </div>
                     <div class="descripcion">
@@ -212,7 +212,8 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                                     </xsl:if>
 
                                     <xsl:if test="dim:field[@element='publisher']">
-                                        <xsl:if test="dim:field[@element = '260' and @qualifier='a']">                                              <xsl:text>:</xsl:text>
+                                        <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
+                                              <xsl:text>:</xsl:text>
                                         </xsl:if>
                                         <xsl:value-of  select="dim:field[@element='publisher'][1]/node()"/>
                                     </xsl:if>
@@ -248,51 +249,51 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
 
                                 <!--CAPITULOs de LIBRO-->
                                 <xsl:when test="$tipo='Capítulo de libro con arbitraje' or $tipo='Capítulo de libro sin arbitraje'">
-	                <li>
-	                	<xsl:if test="dim:field[@element = 'relation' and @qualifier='ispartof']">
-		                    <b>Contenido en:</b> <xsl:value-of select="dim:field[@element = 'relation' and @qualifier='ispartof']/node()"/>
-		                        <xsl:if test="dim:field[@element = 'contributor' and @qualifier='other']">
-		                            <xsl:text> / </xsl:text>
+                                    <li>
+                                    <xsl:if test="dim:field[@element = 'relation' and @qualifier='ispartof']">
+                                        <b>Contenido en:</b> <xsl:value-of select="dim:field[@element = 'relation' and @qualifier='ispartof']/node()"/>
+                                        <xsl:if test="dim:field[@element = 'contributor' and @qualifier='other']">
+                                           <xsl:text> / </xsl:text>
                                            <xsl:value-of select="dim:field[@element = 'contributor' and @qualifier='other']/node()"/>
-		                        </xsl:if>
+                                        </xsl:if>
                                         <xsl:text>. </xsl:text>
                                     </xsl:if>
                                     <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
-		                        <xsl:value-of select="dim:field[@element = '260' and @qualifier='a']/node()"/>
-		                    </xsl:if>
+                                       <xsl:value-of select="dim:field[@element = '260' and @qualifier='a']/node()"/>
+                                    </xsl:if>
                                     <xsl:if test="dim:field[@element='publisher']">
-		                    <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
-		                    	<xsl:text> : </xsl:text>
-		                    </xsl:if>
-	                    <xsl:value-of  select="dim:field[@element='publisher'][1]/node()"/>
-	                </xsl:if>
-	            <xsl:text>, </xsl:text>
-              <xsl:if test="dim:field[@element = 'date' and @qualifier='issued']">
-                <xsl:value-of select="dim:field[@element = 'date' and @qualifier='issued']/node()"/>
+                                        <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
+                                            <xsl:text> : </xsl:text>
+                                         </xsl:if>
+                                        <xsl:value-of  select="dim:field[@element='publisher'][1]/node()"/>
+                                    </xsl:if>
+                                    <xsl:text>, </xsl:text>
+                                    <xsl:if test="dim:field[@element = 'date' and @qualifier='issued']">
+                                       <xsl:value-of select="dim:field[@element = 'date' and @qualifier='issued']/node()"/>
                                        <xsl:text>. </xsl:text>
                                     </xsl:if>
                                     <xsl:if test="dim:field[@element = 'identifier' and @qualifier='isbn']">
-                                       [ISBN: <xsl:value-of select="dim:field[@element = 'identifier' and @qualifier='isbn']/node()"/>
-]
-                <xsl:text>. </xsl:text>
+                                       [ISBN: <xsl:value-of select="dim:field[@element = 'identifier' and @qualifier='isbn']/node()"/>]
+                                       <xsl:text>. </xsl:text>
                                     </xsl:if>
                                     <xsl:if test="dim:field[@element = '773' and @qualifier='g']">
                                         <xsl:if test="not(contains(dim:field[@element = '773' and @qualifier='g']/node(),'p.') or contains(dim:field[@element = '773' and @qualifier='g']/node(),'pag.')  )">
                                             <xsl:text>p. </xsl:text>
                                          </xsl:if>
                                        <xsl:value-of select="dim:field[@element = '773' and @qualifier='g']/node()"/>
-              </xsl:if>
+                                    </xsl:if>
                                     </li>
-          </xsl:when>
+                                </xsl:when>
 
-          <!--TESIS-->
-          <xsl:when test="$tipo='Tesis'">
+                                <!--TESIS-->
+                                <xsl:when test="$tipo='Tesis'">
                                     <li>
                                         <xsl:if test="dim:field[@element='publisher']">
-                    <xsl:value-of  select="dim:field[@element='publisher'][1]/node()"/>
+                                            <xsl:value-of  select="dim:field[@element='publisher'][1]/node()"/>
                                         </xsl:if>
                                         <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
-	                <xsl:if test="dim:field[@element='publisher']">                                                <xsl:text>:</xsl:text>
+                                            <xsl:if test="dim:field[@element='publisher']">
+                                                <xsl:text> : </xsl:text>
                                             </xsl:if>
                                             <xsl:value-of select="dim:field[@element = '260' and @qualifier='a']/node()"/>
                                         </xsl:if>
@@ -362,11 +363,11 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                         </xsl:if>
                         <xsl:if test="dim:field[@element='856'][@qualifier='u']">
                             <li> Enlaces
-	                <ul>
-		                <xsl:for-each select="dim:field[@element='856'][@qualifier='u']">
-		                	<li>
+                            <ul>
+                            <xsl:for-each select="dim:field[@element='856'][@qualifier='u']">
+                                <li>
                                       <xsl:copy-of select="node()"/>
-		                	 </li>
+                                </li>
                             </xsl:for-each>
                             </ul>
                            </li>
@@ -389,21 +390,24 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                                <xsl:for-each select="dim:field[@element='subject'][not(@qualifier)]">
                                         <a href="/xmlui/browse?value={./node()}&amp;type=subject"><xsl:value-of select="./node()"/></a>
                                                   <xsl:if test="count(following-sibling::dim:field[@element='subject'][not(@qualifier)]) != 0">
-	                    	<xsl:text>, </xsl:text>
-	                    </xsl:if>
-		                                               </xsl:for-each>
-	                </li>
+                                                      <xsl:text>, </xsl:text>
+                                                  </xsl:if>
+
+                               </xsl:for-each>
+                           </li>
                        </xsl:if>
                        </ul>
                          </div>
-	            </div>
-                            <xsl:call-template name="itemSummaryView-DIM-fields">
+                </div>
+                
+              <xsl:call-template name="itemSummaryView-DIM-fields">
                 <xsl:with-param name="clause" select="($clause + 1)"/>
                 <xsl:with-param name="phase" select="$otherPhase"/>
               </xsl:call-template>
           </xsl:when>
 
-                    <!-- Abstract row -->
+     
+          <!-- Abstract row -->
           <xsl:when test="$clause = 4 and (dim:field[@element='description' and @qualifier='abstract' and descendant::text()])">
                     <div class="simple-item-view-description">
 	                <h3><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text>:</h3>
@@ -477,18 +481,17 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                                         Enlace permanente
                                     </a>
                                     <xsl:if test="count(following-sibling::dim:field[@element='identifier' and @qualifier='uri']) != 0">
-              <br/>
+                                        <br/>
                                     </xsl:if>
                             </xsl:for-each>
                         </span>
                       </li>
-                      <li> <span class="full">
-</span>
-                  <a>
-                      <xsl:attribute name="href"><xsl:value-of select="$ds_item_view_toggle_url"/></xsl:attribute>
-                      <i18n:text>xmlui.ArtifactBrowser.ItemViewer.show_full</i18n:text>
-                  </a>
-              </li>
+                      <li> <span class="full"></span>
+                          <a>
+                              <xsl:attribute name="href"><xsl:value-of select="$ds_item_view_toggle_url"/></xsl:attribute>
+                              <i18n:text>xmlui.ArtifactBrowser.ItemViewer.show_full</i18n:text>
+                          </a>
+                      </li>
                       <li><span class='st_sharethis' displayText='Compartir'></span></li>
                  </ul>
               </div>
@@ -562,7 +565,7 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
     <xsl:template match="dri:div[@n='item-view']/dri:head" priority="5">
     </xsl:template>
 
-        <xsl:template match="mets:fileGrp[@USE='CONTENT']">
+     <xsl:template match="mets:fileGrp[@USE='CONTENT']">
         <xsl:param name="context"/>
         <xsl:param name="primaryBitstream" select="-1"/>
 <!--
@@ -570,14 +573,14 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
         <div class="file-list">-->
             <xsl:choose>
                 <!-- If one exists and it's of text/html MIME type, only display the primary bitstream -->
-                <xsl:when test="mets:file[@ID=$primaryBitstream]/@MIMETYPE='text/html'">
+                <xsl:when test="mets:file[@ID=$primaryBitstream]/@MIMETYPE='text/html'">                    
                     <xsl:apply-templates select="mets:file[@ID=$primaryBitstream]">
                         <xsl:with-param name="context" select="$context"/>
                     </xsl:apply-templates>
                 </xsl:when>
                 <!-- Otherwise, iterate over and display all of them -->
                 <xsl:otherwise>
-                    <xsl:apply-templates select="mets:file">
+                    <xsl:apply-templates select="mets:file">                        
                      	<!--Do not sort any more bitstream order can be changed-->
                         <!--<xsl:sort data-type="number" select="boolean(./@ID=$primaryBitstream)" order="descending" />-->
                         <!--<xsl:sort select="mets:FLocat[@LOCTYPE='URL']/@xlink:title"/>-->
@@ -589,66 +592,68 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
     </xsl:template>
 
     <xsl:template match="mets:file">
-        <xsl:param name="context" select="."/>
-<!--
+        <xsl:param name="context" select="."/><!--
         <div class="file-wrapper clearfix">
             <div class="thumbnail-wrapper">
                 <a class="image-link">
                     <xsl:attribute name="href">
                         <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
-</xsl:attribute>
-<xsl:choose>
+                    </xsl:attribute>
+                    <xsl:choose>
                         <xsl:when test="$context/mets:fileSec/mets:fileGrp[@USE='THUMBNAIL']/
                         mets:file[@GROUPID=current()/@GROUPID]">
                             <img alt="Thumbnail">
                                 <xsl:attribute name="src">
                                     <xsl:value-of select="$context/mets:fileSec/mets:fileGrp[@USE='THUMBNAIL']/
                                     mets:file[@GROUPID=current()/@GROUPID]/mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
-</xsl:attribute>
-</img>
-</xsl:when>
-<xsl:otherwise>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:when>
+                        <xsl:otherwise>
                             <img alt="Icon" src="{concat($theme-path, '/images/mime.png')}" style="height: {$thumbnail.maxheight}px;"/>
-</xsl:otherwise>
-</xsl:choose>
-</a>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </a>
             </div>-->
             <!--<div class="file-metadata" style="height: {$thumbnail.maxheight}px;">
                   <div>-->
-                                <!--ICONO-->
+
+                  <!--ICONO-->
 <span class="urlDocumentFull">
-                        <xsl:choose>
-                        <xsl:when test="@MIMETYPE='application/pdf'">                        <xsl:text>                    </xsl:text>
-                    <span class="iconPDF">
-<xsl:text>                        </xsl:text>
-</span>
-                    <xsl:text>                        </xsl:text>
+                    <xsl:choose>
+                            <xsl:when test="@MIMETYPE='application/pdf'">
+                                <xsl:text>  </xsl:text>
+                                <span class="iconPDF"><xsl:text> </xsl:text></span>
+                                <xsl:text> </xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:call-template name="getFileTypeDesc">
-                            <xsl:with-param name="mimetype">
-                                <xsl:value-of select="substring-before(@MIMETYPE,'/')"/>
-                                <xsl:text>/</xsl:text>
-                                <xsl:value-of select="substring-after(@MIMETYPE,'/')"/>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-                                <!--URL al documento-->
-                <span>
-                    <xsl:choose>
-                        <xsl:when test="@ADMID">
-                            <xsl:call-template name="display-rights"/>
+                                    <xsl:with-param name="mimetype">
+                                        <xsl:value-of select="substring-before(@MIMETYPE,'/')"/>
+                                        <xsl:text>/</xsl:text>
+                                        <xsl:value-of select="substring-after(@MIMETYPE,'/')"/>
+                                    </xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+
+                   <!--URL al documento-->
+                      <span>
+                        <xsl:choose>
+                            <xsl:when test="@ADMID">
+                                <xsl:call-template name="display-rights"/>
                             </xsl:when>
-                        <xsl:otherwise>
-                        <xsl:call-template name="view-open"/>                            </xsl:otherwise>
-                            </xsl:choose>
-                        </span>
-                    </span>
-                            <!--Caracteristicas -->
-                <!--
+                            <xsl:otherwise>
+                                <xsl:call-template name="view-open"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                     </span>
+      </span>
+                    
+                  <!--Caracteristicas -->
+                  <!--
                     <span>
-<xsl:choose>
+                        <xsl:choose>
                             <xsl:when test="@SIZE &lt; 1024">
                                 <xsl:value-of select="@SIZE"/>
                                 <i18n:text>xmlui.dri2xhtml.METS-1.0.size-bytes</i18n:text>
@@ -668,9 +673,12 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                         </xsl:choose>
                     </span>
                 </div>-->
-                                                                                    <!---->
-                        <!-- Display the contents of 'Description' only if bitstream contains a description -->
-                    <!--<xsl:if test="mets:FLocat[@LOCTYPE='URL']/@xlink:label != ''">
+                
+                    
+                                
+                <!---->
+                <!-- Display the contents of 'Description' only if bitstream contains a description -->
+                <!--<xsl:if test="mets:FLocat[@LOCTYPE='URL']/@xlink:label != ''">
                     <div>
                         <span class="bold">
                             <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-description</i18n:text>
@@ -679,16 +687,17 @@ https://plus.google.com/share?url=http%3A//www.redalyc.org/articulo.oa%3Fid=3100
                         <span>
                             <xsl:attribute name="title"><xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:label"/></xsl:attribute>
                     -->
-                <!--<xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:label"/>-->
-            <!--       <xsl:value-of select="util:shortenString(mets:FLocat[@LOCTYPE='URL']/@xlink:label, 17, 5)"/>
+                    <!--<xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:label"/>-->
+                     <!--       <xsl:value-of select="util:shortenString(mets:FLocat[@LOCTYPE='URL']/@xlink:label, 17, 5)"/>
                         </span>
                     </div>
                 </xsl:if>
-</div>
-                </div>-->
+            </div>
+            
+        </div>-->
     </xsl:template>
 
-    <xsl:template name="view-open">
+    <xsl:template name="view-open">        
         <a>
             <xsl:attribute name="href">
                 <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>

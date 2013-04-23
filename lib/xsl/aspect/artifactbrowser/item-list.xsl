@@ -42,8 +42,7 @@
 
     <xsl:template name="itemSummaryList-DIM">
         <xsl:variable name="itemWithdrawn" select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim/@withdrawn" />
-
-<xsl:variable name="href">
+        <xsl:variable name="href">
             <xsl:choose>
                 <xsl:when test="$itemWithdrawn">
                     <xsl:value-of select="@OBJEDIT"/>
@@ -53,45 +52,90 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-
-                                <xsl:variable name="emphasis" select="confman:getProperty('xmlui.theme.mirage.item-list.emphasis')"/>
+        <xsl:variable name="emphasis" select="confman:getProperty('xmlui.theme.mirage.item-list.emphasis')"/>
         <!--MANDA A IMPRIMIR CADA TITULO DE LA LISTA-->
         <xsl:choose>
             <xsl:when test="'file' = $emphasis">
-
-<div class="item-wrapper clearfix">
-                    <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">                        <xsl:with-param name="href" select="$href"/>                    </xsl:apply-templates>
-                                                                                <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                                         mode="itemSummaryList-DIM-file">                               <xsl:with-param name="href" select="$href"/>                               
-                                                            </xsl:apply-templates>
-                </div>
-            </xsl:when>
-            <xsl:otherwise>
                 <div class="item-wrapper clearfix">
-                <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
+                    <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
                         <xsl:with-param name="href" select="$href"/>
                     </xsl:apply-templates>
-                  <div class="artifact-description">
-                      <ul>
-                        <!--Titulo y Autor-->
-                        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                                     mode="itemSummaryList-DIM-metadata">                                <xsl:with-param name="href" select="$href"/>
-                        </xsl:apply-templates>
-
-                        <!--Informacion por tipo de documento-->
-                        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                         mode="informationTypeDocument"/>
-
-                        <!--Resumen, temas y mas detalles-->
-                        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                         mode="Topics_Abstract_Others">
-                             <xsl:with-param name="href" select="$href"/>                        </xsl:apply-templates>
-            </ul>
-                    </div>
-               </div>
+                    
+                    <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+                                         mode="itemSummaryList-DIM-file">
+                               <xsl:with-param name="href" select="$href"/>
+                               
+                    </xsl:apply-templates>
+                </div>
+            </xsl:when>
+            <xsl:otherwise>               
+                    <xsl:choose>
+                        <xsl:when test="$request-uri = ''"> <!--DESPLIEGA LA LISTA DE LOS MAS RECIENTES PUBLICADOS-->
+                                  <xsl:call-template name="itemSummaryList-DIM-NOVEDADES">
+                                      <xsl:with-param name="href" select="$href"/>
+                                  </xsl:call-template>
+                         </xsl:when>
+                         <xsl:otherwise>
+                             <div class="item-wrapper clearfix">
+                                  <!--Imprimir la portada-->
+                                <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
+                                    <xsl:with-param name="href" select="$href"/>
+                                </xsl:apply-templates>
+                                <!--Imprime la informacion completa del item-->
+                                <div class="artifact-description">
+                                  <xsl:call-template name="itemSummaryList-DIM-GENERAL">
+                                      <xsl:with-param name="href" select="$href"/>
+                                  </xsl:call-template>
+                                </div>
+                            </div>
+                         </xsl:otherwise>
+                    </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+
+<!--TEMPLATE QUE MANDA A IMPRIMIR LA LISTA DE ITEMS CUANDO NO SON LAS NOVEDADES-->
+<xsl:template name="itemSummaryList-DIM-NOVEDADES">
+    <xsl:param name="href"/>    				
+    <li>
+        <ul class="newDoc">
+            <li class="imgNews">
+                 <img width="95" height="130" alt="No imagen disponible que tiene path" src="http://bibliotecasibe.ecosur.mx/sibe/portadas/51281.png"/>
+            </li>
+            <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+                                 mode="itemTitle-DIM-Novedades">
+                    <xsl:with-param name="href" select="$href"/>
+            </xsl:apply-templates>
+        </ul>
+    </li>
+</xsl:template>
+
+
+
+
+<!--TEMPLATE QUE MANDA A IMPRIMIR LA LISTA DE ITEMS CUANDO NO SON LAS NOVEDADES-->
+<xsl:template name="itemSummaryList-DIM-GENERAL">
+    <xsl:param name="href"/>
+    <ul>
+        <!--Titulo y Autor-->
+        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+                             mode="itemSummaryList-DIM-metadata">
+                <xsl:with-param name="href" select="$href"/>
+        </xsl:apply-templates>
+
+        <!--Informacion por tipo de documento-->
+        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+         mode="informationTypeDocument"/>
+
+        <!--Resumen, temas y mas detalles-->
+        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+         mode="Topics_Abstract_Others">
+             <xsl:with-param name="href" select="$href"/>
+        </xsl:apply-templates>
+      </ul>
+</xsl:template>
+
+
 
     <!--handles the rendering of a single item in a list in file mode-->
     <xsl:template match="dim:dim" mode="itemSummaryList-DIM-file">
@@ -169,9 +213,47 @@
         </div>
     </xsl:template>
 
-    
 
-            <!--handles the rendering of a single item in a list in metadata mode-->
+<!--IMPRIME LA INFORMACION DE CADA ITEM-->
+    <xsl:template match="dim:dim" mode="itemTitle-DIM-Novedades">
+        <xsl:param name="href"/>
+        <xsl:variable name="handleItem" select="substring-after($href,'/xmlui/handle/123456789/')"/>
+            <li class="artifact-title titleDocument" id="title{$handleItem}">
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="$href"/>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="dim:field[@element='title']">
+                            <xsl:variable name="tamTi" select="string-length(dim:field[@element='title'][1]/node())"/>
+                            <xsl:choose>
+                                <xsl:when test="$tamTi>80">
+                                    <xsl:value-of select="substring(dim:field[@element='title'][1]/node(),0,80)"/>
+                                    <xsl:text>...</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="dim:field[@element='title'][1]/node()"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.no-title</i18n:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:element>
+                <span class="Z3988">
+                    <xsl:attribute name="title">
+                        <xsl:call-template name="renderCOinS"/>
+                    </xsl:attribute>
+                    &#xFEFF; <!-- non-breaking space to force separating the end tag -->
+                </span>
+            </li>
+    </xsl:template>
+
+
+
+
+    <!--handles the rendering of a single item in a list in metadata mode-->
     <!--IMPRIME LA INFORMACION DE CADA ITEM-->
     <xsl:template match="dim:dim" mode="itemSummaryList-DIM-metadata">
         <xsl:param name="href"/>
@@ -197,7 +279,7 @@
                     &#xFEFF; <!-- non-breaking space to force separating the end tag -->
                 </span>
             </li>
-            <li class="artifact-info">
+            <li class="artifact-info" >
                 <span class="author" id="autores{$handleItem}">
                     <xsl:choose>
                         <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">
@@ -205,10 +287,10 @@
                                 <span>
                                   <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
                                       <xsl:if test="@authority">
-                                    <xsl:attribute name="class"><xsl:text>ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
-                                  </xsl:if>
-                                  <xsl:copy-of select="node()"/>
-                                </a>
+                                        <xsl:attribute name="class"><xsl:text> ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
+                                      </xsl:if>
+                                      <xsl:copy-of select="node()"/>
+                                  </a>
                                 </span>
                                 <xsl:if test="count(following-sibling::dim:field[@element='contributor'][@qualifier='author']) != 0">
                                     <xsl:text>; </xsl:text>
@@ -219,20 +301,20 @@
                             <xsl:for-each select="dim:field[@element='creator']">
                                 <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
                                     <xsl:copy-of select="node()"/>
-                                <xsl:if test="count(following-sibling::dim:field[@element='creator']) != 0">
-                                    <xsl:text>; </xsl:text>
-                                </xsl:if>
-                            </a>
+                                    <xsl:if test="count(following-sibling::dim:field[@element='creator']) != 0">
+                                        <xsl:text>; </xsl:text>
+                                    </xsl:if>
+                                </a>
                             </xsl:for-each>
                         </xsl:when>
                         <xsl:when test="dim:field[@element='contributor']">
                             <xsl:for-each select="dim:field[@element='contributor']">
                                 <a href="/xmlui/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter={node()}">
                                     <xsl:copy-of select="node()"/>
-                                <xsl:if test="count(following-sibling::dim:field[@element='contributor']) != 0">
-                                    <xsl:text>; </xsl:text>
-                                </xsl:if>
-                            </a>
+                                    <xsl:if test="count(following-sibling::dim:field[@element='contributor']) != 0">
+                                        <xsl:text>; </xsl:text>
+                                    </xsl:if>
+                                </a>
                             </xsl:for-each>
                         </xsl:when>
                         <xsl:otherwise>
@@ -264,9 +346,9 @@
                         </xsl:if>
 
                         <xsl:if test="dim:field[@element='date' and @qualifier='issued']">
- <xsl:if test="dim:field[@element = '260' and @qualifier='a'] or dim:field[@element='publisher']">
+                            <xsl:if test="dim:field[@element = '260' and @qualifier='a'] or dim:field[@element='publisher']">
                                         <xsl:text>, </xsl:text>
-                </xsl:if>
+                            </xsl:if>
                             <xsl:value-of select="dim:field[@element='date' and @qualifier='issued']"/>
                         </xsl:if>
                     </li>
@@ -297,9 +379,9 @@
                         <li>
                         <xsl:if test="dim:field[@element = 'relation' and @qualifier='ispartof']">
                             Contenido en: <xsl:value-of select="dim:field[@element = 'relation' and @qualifier='ispartof']/node()"/>
-	                <xsl:if test="dim:field[@element = 'contributor' and @qualifier='other']">
-	                    <xsl:text> / </xsl:text>
-	                    <xsl:value-of select="dim:field[@element = 'contributor' and @qualifier='other']/node()"/>
+                            <xsl:if test="dim:field[@element = 'contributor' and @qualifier='other']">
+                               <xsl:text> / </xsl:text>
+                               <xsl:value-of select="dim:field[@element = 'contributor' and @qualifier='other']/node()"/>
                             </xsl:if>
                             <xsl:text>. </xsl:text>
                         </xsl:if>
@@ -307,13 +389,13 @@
                            <xsl:value-of select="dim:field[@element = '260' and @qualifier='a']/node()"/>
                         </xsl:if>
                         <xsl:if test="dim:field[@element='publisher']">
-	                        <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
-	                            <xsl:text> : </xsl:text>
+                            <xsl:if test="dim:field[@element = '260' and @qualifier='a']">
+                                <xsl:text> : </xsl:text>
                              </xsl:if>
                             <xsl:value-of  select="dim:field[@element='publisher'][1]/node()"/>
-	                        </xsl:if>
-	                        <xsl:text>, </xsl:text>
-	                    <xsl:if test="dim:field[@element = 'date' and @qualifier='issued']">
+                        </xsl:if>
+                        <xsl:text>, </xsl:text>
+                        <xsl:if test="dim:field[@element = 'date' and @qualifier='issued']">
                            <xsl:value-of select="dim:field[@element = 'date' and @qualifier='issued']/node()"/>
                            <xsl:text>. </xsl:text>
                         </xsl:if>
@@ -342,7 +424,7 @@
                                 </xsl:if>
                                 <xsl:value-of select="dim:field[@element = '260' and @qualifier='a']/node()"/>
                             </xsl:if>
-	                    <xsl:if test="dim:field[@element = 'date' and @qualifier='issued']">
+                            <xsl:if test="dim:field[@element = 'date' and @qualifier='issued']">
                                 <xsl:if test="dim:field[@element='publisher'] or dim:field[@element = '260' and @qualifier='a']">
                                     <xsl:text>. </xsl:text>
                                  </xsl:if>
@@ -392,42 +474,18 @@
                         <xsl:if test="dim:field[@element='856'][@qualifier='u']">
                             <li>
                                 <xsl:variable name="url">
-	                        <xsl:value-of select="dim:field[@element='856'][@qualifier='u']"/>
-	                    </xsl:variable>
-	                    <span class="image imageVideo" ><xsl:text>  </xsl:text>
-</span>
-	                <span class="videos" name="{$url}"> Video </span>
-                </li>
+                                    <xsl:value-of select="dim:field[@element='856'][@qualifier='u']"/>
+                                </xsl:variable>
+                                <span class="image imageVideo" ><xsl:text>  </xsl:text></span>
+                                <span class="videos" name="{$url}"> Video </span>
+                            </li>
                         </xsl:if>
-            </xsl:if>
-            <xsl:if test="dim:field[@element = 'description' and @qualifier='abstract']">
-                <li>
-                        <span class="abstract"><xsl:text> </xsl:text></span>
-                        <span class="ResumenName" id="resumen{$handleItem}">Resumen</span></li>
-                        <xsl:variable name="abstract" select="dim:field[@element = 'description' and @qualifier='abstract']/node()"/>
-                <div id="ContentResumen{$handleItem}">
-                    <xsl:value-of select="util:shortenString($abstract, 220, 10)"/>
-                </div>
-                                                                                    <!--Activa el emergente-->
-                        <script type="text/javascript">
-                            var nameContent="#"+"ContentResumen"+<xsl:value-of select="$handleItem"/>;
-                            var options={
-                                        content:$(nameContent).html(),
-                                        html:"true",
-                                        placement:"right",
-                                        trigger:"click",
-                                        rel:"popover",
-                                        title:"x"
-                            }
-                            $("#resumen<xsl:value-of select="$handleItem"/>").popover(options);
-                            $(nameContent).remove();
-                        </script>
-                    </xsl:if>
+                    </xsl:if>                   
 
                    <!--Inserta el enlace para ver el popover emergente con la información restante-->
                    <li id="popover{$handleItem}">
-                       <span class="details"><xsl:text> </xsl:text></span>
-                       <span class="showMoreDetails">Más información</span>
+                       <span class="image details"><xsl:text> </xsl:text></span>
+                       <span class="showMoreDetails">Información completa</span>
                    </li>
 
                    <!--Inserta el shareThis de cada resultado-->
@@ -452,7 +510,8 @@
                 </xsl:if>
             </xsl:if>
         </div>
-                            <!--Para ver rapido los detalles-->
+
+        <!--Para ver rapido los detalles-->
           <div  style="display:none" id="moreDetails{$handleItem}">
                     <xsl:variable name="titulo">
                             <xsl:value-of select="dim:field[@element='title'][1]/node()"/>
@@ -565,21 +624,28 @@
                              </td>
                            </tr>                           
                         </xsl:if>
-                        <tr>
-
+                        <!--<tr>
                                <td colspan="2">
-                                   <div class="fullRegisterDiv">                                       
+                                   
+                               </td>
+                           </tr>-->                       
+                        </table>
+                         <xsl:if test="dim:field[@element = 'description' and @qualifier='abstract']">
+                                    <div class="fullRegisterDiv" style="padding:0px"><b>Resumen</b></div>
+                                        <div class="abstract">
+                                                <xsl:value-of select="dim:field[@element = 'description' and @qualifier='abstract']/node()"/>
+                                        </div>
+                        </xsl:if>
+                        <div class="fullRegisterDiv">
                                          <xsl:element name="a">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of select="$href"/>
                                             </xsl:attribute>
-                                            <span class="fullRegister"> </span>  Ir al registro completo
+                                            <span class="fullRegister"> </span>Ir al registro completo
                                         </xsl:element>
-                                 </div>
-                               </td>
-                           </tr>
-                        </table>
-                </div>                
+                       </div>
+                </div>
+               <xsl:if test="$request-uri!= ''"> <!--No se ejecuta cuando es la pagina principal-->
                <script type="text/javascript">
                     var nameContent="#"+"moreDetails"+<xsl:value-of select="$handleItem"/>;
                     var options={
@@ -607,9 +673,11 @@
                         "summary":autores
                         });
                 </script>
+                </xsl:if>
     </xsl:template>
 
-                <xsl:template name="itemDetailList-DIM">
+
+    <xsl:template name="itemDetailList-DIM">
         <xsl:call-template name="itemSummaryList-DIM"/>
     </xsl:template>
 
@@ -628,24 +696,24 @@
         </xsl:variable>
         <div class="thumbnail-wrapper">
             <div class="artifact-preview">
-                <div>
+                   <div>
                         <a class="image-link" href="{$href}">
-                    <xsl:choose>
-                        <xsl:when test="mets:fileGrp[@USE='THUMBNAIL']">
-                            <img alt="Thumbnail">
-                                <xsl:attribute name="src">
-                                    <xsl:value-of
-                                            select="mets:fileGrp[@USE='THUMBNAIL']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
-                                </xsl:attribute>
-                            </img>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <span class="imgType"> </span>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </a>
-            </div>
-        <div id="leyenda{$handleItem}" class="leyendaItem"></div>
+                            <xsl:choose>
+                                <xsl:when test="mets:fileGrp[@USE='THUMBNAIL']">
+                                    <img alt="Thumbnail">
+                                        <xsl:attribute name="src">
+                                            <xsl:value-of
+                                                    select="mets:fileGrp[@USE='THUMBNAIL']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                                        </xsl:attribute>
+                                    </img>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <span class="imgType"> </span>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </a>
+                    </div>
+                    <div id="leyenda{$handleItem}" class="leyendaItem"></div>
             </div>
             
         </div>
