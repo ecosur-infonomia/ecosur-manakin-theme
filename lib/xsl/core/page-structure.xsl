@@ -138,7 +138,7 @@
             initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
             maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
             -->
-            <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;"/>
 
             <link rel="shortcut icon">
                 <xsl:attribute name="href">
@@ -277,7 +277,7 @@
                     <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
                     <xsl:text>/themes/</xsl:text>
                     <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='theme'][@qualifier='path']"/>
-                    <xsl:text>/lib/js/modernizr-1.7.min.js</xsl:text>
+                    <xsl:text>/lib/modernizr/modernizr.js</xsl:text>
                 </xsl:attribute>&#160;</script>
 
 <!--Configuracion del js de shareThis-->
